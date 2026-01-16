@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de reCAPTCHA</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <h1>Prueba reCAPTCHA</h1>
+
+    <form action="/verificar" method="POST">
+
+        <!-- DATO QUE SE GUARDA EN LA BD -->
+        <label>Nombre:</label><br>
+        <input type="text" name="nombre" required>
+        <br><br>
+
+        <!-- OPCIONAL -->
+        <label>Correo:</label><br>
+        <input type="email" name="correo">
+        <br><br>
+
+        <!-- reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="6Lc9wUQsAAAAABTFumROwrXSSNnjJk-JOuqq0bBx"></div>
+
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+    <a href="/public/indexdos.html">Siguiente Pagina</a>
+</body>
+</html>
