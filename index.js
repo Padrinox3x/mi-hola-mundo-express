@@ -39,6 +39,9 @@ app.get('/error-test', (req, res) => {
     throw new Error('Error de prueba');
 });
 
+app.get('/formulario', (req, res) => {
+    res.sendFile(__dirname + '/public/formulario.html');
+});
 // Verificación reCAPTCHA
 app.post('/verificar', async (req, res, next) => {
     try {
