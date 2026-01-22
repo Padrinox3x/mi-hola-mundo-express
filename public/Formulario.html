@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulario Validado</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/formulario.css">
 </head>
 <body>
 
-<form id="formulario">
+<form id="formulario" novalidate>
     <h2>Registro</h2>
 
-    <label>Nombre</label>
-    <input type="text" id="nombre" maxlength="30">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" maxlength="30">
 
-    <label>Apellido Paterno</label>
-    <input type="text" id="apellidoP" maxlength="30">
+    <label for="apellidoP">Apellido Paterno</label>
+    <input type="text" id="apellidoP" name="apellidoP" maxlength="30">
 
-    <label>Apellido Materno</label>
-    <input type="text" id="apellidoM" maxlength="30">
+    <label for="apellidoM">Apellido Materno</label>
+    <input type="text" id="apellidoM" name="apellidoM" maxlength="30">
 
-    <label>Usuario</label>
-    <input type="text" id="usuario" maxlength="20">
+    <label for="usuario">Usuario</label>
+    <input type="text" id="usuario" name="usuario" maxlength="20">
 
-    <label>Contraseña</label>
-    <input type="password" id="password" maxlength="30">
+    <label for="password">Contraseña</label>
+    <input type="password" id="password" name="password" maxlength="30">
 
-    <label>Repetir Contraseña</label>
-    <input type="password" id="password2" maxlength="30">
+    <label for="password2">Repetir Contraseña</label>
+    <input type="password" id="password2" name="password2" maxlength="30">
 
-    <label>LADA</label>
-    <input type="text" id="lada" maxlength="3">
+    <label for="lada">LADA</label>
+    <input type="text" id="lada" name="lada" maxlength="3">
 
-    <label>Número de Teléfono (10 dígitos)</label>
-    <input type="text" id="telefono" maxlength="10">
+    <label for="telefono">Número de Teléfono (10 dígitos)</label>
+    <input type="text" id="telefono" name="telefono" maxlength="10">
 
-    <label>Fecha de Nacimiento</label>
-    <input type="date" id="fecha">
+    <label for="fecha">Fecha de Nacimiento</label>
+    <input type="date" id="fecha" name="fecha">
 
     <div class="error" id="error"></div>
 
@@ -43,74 +43,74 @@
 </form>
 
 <script>
-document.getElementById("formulario").addEventListener("submit", function (e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
 
-    const error = document.getElementById("error");
-    error.textContent = "";
+    document.getElementById("formulario").addEventListener("submit", function (e) {
+        e.preventDefault();
 
-    const nombre = document.getElementById("nombre").value;
-    const apellidoP = document.getElementById("apellidoP").value;
-    const apellidoM = document.getElementById("apellidoM").value;
-    const usuario = document.getElementById("usuario").value;
-    const password = document.getElementById("password").value;
-    const password2 = document.getElementById("password2").value;
-    const lada = document.getElementById("lada").value;
-    const telefono = document.getElementById("telefono").value;
-    const fecha = document.getElementById("fecha").value;
+        const error = document.getElementById("error");
+        error.textContent = "";
 
-    // Expresiones regulares
-    const sinEspacios = /^\S+$/;
-    const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,30}$/;
-    const soloNumeros = /^[0-9]+$/;
+        const nombre = document.getElementById("nombre").value.trim();
+        const apellidoP = document.getElementById("apellidoP").value.trim();
+        const apellidoM = document.getElementById("apellidoM").value.trim();
+        const usuario = document.getElementById("usuario").value.trim();
+        const password = document.getElementById("password").value;
+        const password2 = document.getElementById("password2").value;
+        const lada = document.getElementById("lada").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
+        const fecha = document.getElementById("fecha").value;
 
-    if (!nombre || !apellidoP || !apellidoM || !usuario || !password || !password2 || !lada || !telefono || !fecha) {
-        error.textContent = "Todos los campos son obligatorios";
-        return;
-    }
+        const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
+        const sinEspacios = /^\S+$/;
+        const soloNumeros = /^[0-9]+$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,30}$/;
 
-    // Nombres y apellidos: solo letras y sin espacios
-    if (![nombre, apellidoP, apellidoM].every(v => sinEspacios.test(v) && soloLetras.test(v))) {
-        error.textContent = "Nombre y apellidos solo deben contener letras y sin espacios";
-        return;
-    }
+        if (!nombre || !apellidoP || !apellidoM || !usuario || !password || !password2 || !lada || !telefono || !fecha) {
+            error.textContent = "Todos los campos son obligatorios";
+            return;
+        }
 
-    // Usuario: solo letras y sin espacios
-    if (!sinEspacios.test(usuario) || !soloLetras.test(usuario)) {
-        error.textContent = "El usuario solo debe contener letras y sin espacios";
-        return;
-    }
+        if (![nombre, apellidoP, apellidoM].every(v => soloLetras.test(v))) {
+            error.textContent = "Nombre y apellidos solo deben contener letras";
+            return;
+        }
 
-    if (!sinEspacios.test(password)) {
-        error.textContent = "La contraseña no debe contener espacios";
-        return;
-    }
+        if (!soloLetras.test(usuario) || !sinEspacios.test(usuario)) {
+            error.textContent = "El usuario solo debe contener letras y sin espacios";
+            return;
+        }
 
-    if (!passwordRegex.test(password)) {
-        error.textContent = "La contraseña debe tener mínimo 8 caracteres, una mayúscula y un carácter especial";
-        return;
-    }
+        if (!sinEspacios.test(password)) {
+            error.textContent = "La contraseña no debe contener espacios";
+            return;
+        }
 
-    if (password !== password2) {
-        error.textContent = "Las contraseñas no coinciden";
-        return;
-    }
+        if (!passwordRegex.test(password)) {
+            error.textContent = "La contraseña debe tener mínimo 8 caracteres, una mayúscula y un carácter especial";
+            return;
+        }
 
-    if (!soloNumeros.test(lada) || lada.length < 2) {
-        error.textContent = "La LADA debe contener solo números";
-        return;
-    }
+        if (password !== password2) {
+            error.textContent = "Las contraseñas no coinciden";
+            return;
+        }
 
-    if (!soloNumeros.test(telefono) || telefono.length !== 10) {
-        error.textContent = "El teléfono debe tener exactamente 10 dígitos";
-        return;
-    }
+        if (!soloNumeros.test(lada) || lada.length < 2) {
+            error.textContent = "La LADA debe contener solo números";
+            return;
+        }
 
-    alert("Formulario válido ✅");
+        if (!soloNumeros.test(telefono) || telefono.length !== 10) {
+            error.textContent = "El teléfono debe tener exactamente 10 dígitos";
+            return;
+        }
+
+        alert("Formulario válido ✅");
+    });
+
 });
 </script>
-
 
 </body>
 </html>
