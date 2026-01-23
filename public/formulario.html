@@ -45,6 +45,22 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
+    const soloLetrasInputs = [
+        "nombre",
+        "apellidoP",
+        "apellidoM",
+        "usuario"
+    ];
+
+    soloLetrasInputs.forEach(id => {
+        const input = document.getElementById(id);
+
+        input.addEventListener("input", function () {
+            // Reemplaza TODO lo que no sea letra (incluye acentos y ñ)
+            this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ]/g, "");
+        });
+    });
+
     document.getElementById("formulario").addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -71,13 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (![nombre, apellidoP, apellidoM].every(v => soloLetras.test(v))) {
-            error.textContent = "Nombre y apellidos solo deben contener letras";
-            return;
-        }
-
-        if (!soloLetras.test(usuario) || !sinEspacios.test(usuario)) {
-            error.textContent = "El usuario solo debe contener letras y sin espacios";
+        if (![nombre, apellidoP, apellidoM, usuario].every(v => soloLetras.test(v))) {
+            error.textContent = "Nombre, apellidos y usuario solo deben contener letras";
             return;
         }
 
