@@ -10,114 +10,151 @@
 <form id="formulario" novalidate>
     <h2>Registro</h2>
 
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombre" maxlength="30">
+    <label>Nombre</label>
+    <input type="text" id="nombre" maxlength="30">
+    <div class="mensaje-error" id="error-nombre"></div>
 
-    <label for="apellidoP">Apellido Paterno</label>
-    <input type="text" id="apellidoP" name="apellidoP" maxlength="30">
+    <label>Apellido Paterno</label>
+    <input type="text" id="apellidoP" maxlength="30">
+    <div class="mensaje-error" id="error-apellidoP"></div>
 
-    <label for="apellidoM">Apellido Materno</label>
-    <input type="text" id="apellidoM" name="apellidoM" maxlength="30">
+    <label>Apellido Materno</label>
+    <input type="text" id="apellidoM" maxlength="30">
+    <div class="mensaje-error" id="error-apellidoM"></div>
 
-    <label for="usuario">Usuario</label>
-    <input type="text" id="usuario" name="usuario" maxlength="20">
+    <label>Usuario</label>
+    <input type="text" id="usuario" maxlength="20">
+    <div class="mensaje-error" id="error-usuario"></div>
 
-    <label for="password">Contraseña</label>
-    <input type="password" id="password" name="password" maxlength="30">
+    <label>Contraseña</label>
+    <div class="password-box">
+        <input type="password" id="password" maxlength="30">
+        <button type="button" id="verPass">👁️</button>
+    </div>
+    <div id="fuerzaPassword" class="fuerza"></div>
+    <div class="mensaje-error" id="error-password"></div>
 
-    <label for="password2">Repetir Contraseña</label>
-    <input type="password" id="password2" name="password2" maxlength="30">
+    <label>Repetir Contraseña</label>
+    <input type="password" id="password2" maxlength="30">
+    <div class="mensaje-error" id="error-password2"></div>
 
-    <label for="lada">LADA</label>
-    <input type="text" id="lada" name="lada" maxlength="3">
+    <label>LADA</label>
+    <input type="text" id="lada" maxlength="3">
+    <div class="mensaje-error" id="error-lada"></div>
 
-    <label for="telefono">Número de Teléfono (10 dígitos)</label>
-    <input type="text" id="telefono" name="telefono" maxlength="10">
+    <label>Teléfono</label>
+    <input type="text" id="telefono" maxlength="10">
+    <div class="mensaje-error" id="error-telefono"></div>
 
-    <label for="fecha">Fecha de Nacimiento</label>
-    <input type="date" id="fecha" name="fecha">
+    <label>Fecha de Nacimiento</label>
+    <input type="date" id="fecha">
+    <div class="mensaje-error" id="error-fecha"></div>
 
-    <div class="error" id="error"></div>
-
-    <button type="submit">Registrar</button>
+    <div class="botones">
+        <button type="submit">Registrar</button>
+        <a href="/"><button type="button">⬅ Regresar</button></a>
+    </div>
 </form>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const soloLetrasInputs = [
-        "nombre",
-        "apellidoP",
-        "apellidoM",
-        "usuario"
-    ];
+    const soloLetrasRegex = /[^A-Za-zÁÉÍÓÚáéíóúÑñ]/g;
+    const soloNumerosRegex = /^[0-9]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,30}$/;
 
-    soloLetrasInputs.forEach(id => {
+    const marcarValido = (id) => {
         const input = document.getElementById(id);
+        input.classList.remove("invalido");
+        input.classList.add("valido");
+        document.getElementById("error-" + id).textContent = "";
+    };
 
-        input.addEventListener("input", function () {
-            // Reemplaza TODO lo que no sea letra (incluye acentos y ñ)
-            this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ]/g, "");
+    const marcarInvalido = (id, mensaje) => {
+        const input = document.getElementById(id);
+        input.classList.remove("valido");
+        input.classList.add("invalido");
+        document.getElementById("error-" + id).textContent = mensaje;
+    };
+
+    ["nombre", "apellidoP", "apellidoM", "usuario"].forEach(id => {
+        document.getElementById(id).addEventListener("input", function () {
+            this.value = this.value.replace(soloLetrasRegex, "");
         });
     });
 
-    document.getElementById("formulario").addEventListener("submit", function (e) {
+    // Mostrar / ocultar contraseña
+    document.getElementById("verPass").addEventListener("click", () => {
+        const pass = document.getElementById("password");
+        pass.type = pass.type === "password" ? "text" : "password";
+    });
+
+    // Fuerza de contraseña
+    const passwordInput = document.getElementById("password");
+    const fuerzaDiv = document.getElementById("fuerzaPassword");
+
+    passwordInput.addEventListener("input", () => {
+        const v = passwordInput.value;
+        let fuerza = 0;
+
+        if (v.length >= 8) fuerza++;
+        if (/[A-Z]/.test(v)) fuerza++;
+        if (/[0-9]/.test(v)) fuerza++;
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(v)) fuerza++;
+
+        fuerzaDiv.className = "fuerza";
+
+        if (fuerza <= 1) {
+            fuerzaDiv.textContent = "🔐 Débil";
+            fuerzaDiv.classList.add("debil");
+        } else if (fuerza <= 3) {
+            fuerzaDiv.textContent = "🔐 Media";
+            fuerzaDiv.classList.add("media");
+        } else {
+            fuerzaDiv.textContent = "🔐 Fuerte";
+            fuerzaDiv.classList.add("fuerte");
+        }
+    });
+
+    // SUBMIT
+    document.getElementById("formulario").addEventListener("submit", e => {
         e.preventDefault();
 
-        const error = document.getElementById("error");
-        error.textContent = "";
+        const campos = ["nombre","apellidoP","apellidoM","usuario","password","password2","lada","telefono","fecha"];
+        let ok = true;
 
-        const nombre = document.getElementById("nombre").value.trim();
-        const apellidoP = document.getElementById("apellidoP").value.trim();
-        const apellidoM = document.getElementById("apellidoM").value.trim();
-        const usuario = document.getElementById("usuario").value.trim();
-        const password = document.getElementById("password").value;
-        const password2 = document.getElementById("password2").value;
-        const lada = document.getElementById("lada").value.trim();
-        const telefono = document.getElementById("telefono").value.trim();
-        const fecha = document.getElementById("fecha").value;
+        campos.forEach(id => {
+            if (!document.getElementById(id).value.trim()) {
+                marcarInvalido(id, "Campo obligatorio");
+                ok = false;
+            } else {
+                marcarValido(id);
+            }
+        });
 
-        const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/;
-        const sinEspacios = /^\S+$/;
-        const soloNumeros = /^[0-9]+$/;
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,30}$/;
-
-        if (!nombre || !apellidoP || !apellidoM || !usuario || !password || !password2 || !lada || !telefono || !fecha) {
-            error.textContent = "Todos los campos son obligatorios";
-            return;
+        if (!soloNumerosRegex.test(lada.value)) {
+            marcarInvalido("lada", "Solo números");
+            ok = false;
         }
 
-        if (![nombre, apellidoP, apellidoM, usuario].every(v => soloLetras.test(v))) {
-            error.textContent = "Nombre, apellidos y usuario solo deben contener letras";
-            return;
+        if (telefono.value.length !== 10) {
+            marcarInvalido("telefono", "Debe tener 10 dígitos");
+            ok = false;
         }
 
-        if (!sinEspacios.test(password)) {
-            error.textContent = "La contraseña no debe contener espacios";
-            return;
+        if (!passwordRegex.test(password.value)) {
+            marcarInvalido("password", "Debe tener mayúscula y carácter especial");
+            ok = false;
         }
 
-        if (!passwordRegex.test(password)) {
-            error.textContent = "La contraseña debe tener mínimo 8 caracteres, una mayúscula y un carácter especial";
-            return;
+        if (password.value !== password2.value) {
+            marcarInvalido("password2", "Las contraseñas no coinciden");
+            ok = false;
         }
 
-        if (password !== password2) {
-            error.textContent = "Las contraseñas no coinciden";
-            return;
+        if (ok) {
+            alert("Formulario válido ✅");
         }
-
-        if (!soloNumeros.test(lada) || lada.length < 2) {
-            error.textContent = "La LADA debe contener solo números";
-            return;
-        }
-
-        if (!soloNumeros.test(telefono) || telefono.length !== 10) {
-            error.textContent = "El teléfono debe tener exactamente 10 dígitos";
-            return;
-        }
-
-        alert("Formulario válido ✅");
     });
 
 });
