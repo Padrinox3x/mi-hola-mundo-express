@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Prueba de reCAPTCHA</title>
+    <title>Inicio</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/index.css">
@@ -16,29 +16,28 @@
     <nav class="breadcrumbs">
         <a href="/public/indexdos.html">Inicio</a>
         <span>›</span>
-        <span>Formulario</span>
+        <a href="/formulario">Formulario</a>
+        <span>›</span>
+        <span class="active">reCAPTCHA</span>
     </nav>
 
-    <!-- Contenedor principal -->
-    <div class="container">
+    <!-- Contenedor -->
+    <main class="container">
 
         <h1>Prueba reCAPTCHA</h1>
 
         <form action="/verificar" method="POST" class="formulario">
 
-            <!-- Nombre -->
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" required>
             </div>
 
-            <!-- Correo -->
             <div class="form-group">
                 <label for="correo">Correo (opcional)</label>
                 <input type="email" id="correo" name="correo">
             </div>
 
-            <!-- reCAPTCHA -->
             <div class="form-group captcha">
                 <div class="g-recaptcha" data-sitekey="6Lc9wUQsAAAAABTFumROwrXSSNnjJk-JOuqq0bBx"></div>
             </div>
@@ -46,13 +45,7 @@
             <button type="submit">Enviar</button>
         </form>
 
-        <!-- Links -->
-        <div class="links">
-            <a href="/public/indexdos.html">⬅ Volver</a>
-            <a href="/formulario">Otro formulario</a>
-        </div>
-
-    </div>
+    </main>
 
 </body>
 </html>
