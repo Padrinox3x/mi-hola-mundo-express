@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/partials/breadcrumbs.html') // 👈 SIN /public
+    fetch('/breadcrumbs.html') // 👈 SIN /public
         .then(res => {
             if (!res.ok) throw new Error('No se pudo cargar el breadcrumb');
             return res.text();
