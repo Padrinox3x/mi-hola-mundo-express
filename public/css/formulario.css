@@ -1,27 +1,39 @@
-/* RESET */
+/* =========================
+   RESET
+========================= */
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* FONDO */
+/* =========================
+   BODY (SIN FLEX)
+========================= */
 body {
     margin: 0;
     min-height: 100vh;
-    background: linear-gradient(135deg, #007bff, #00c6ff);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: #f4f6f8; /* gris claro profesional */
 }
 
-/* FORMULARIO */
+/* =========================
+   CONTENEDOR
+========================= */
+.main-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 15px;
+}
+
+/* =========================
+   FORMULARIO
+========================= */
 form {
     background: #ffffff;
     width: 100%;
     max-width: 450px;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
 }
 
 /* TÍTULO */
@@ -54,7 +66,7 @@ input {
 input:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0,123,255,0.4);
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
 }
 
 /* VALIDACIÓN */
@@ -85,7 +97,6 @@ input.invalido {
 
 .password-box input {
     flex: 1;
-    margin-top: 0;
 }
 
 .password-box button {
@@ -109,22 +120,13 @@ input.invalido {
     font-weight: bold;
 }
 
-.fuerza.debil {
-    color: #dc3545;
-}
-
-.fuerza.media {
-    color: #ffc107;
-}
-
-.fuerza.fuerte {
-    color: #28a745;
-}
+.fuerza.debil { color: #dc3545; }
+.fuerza.media { color: #ffc107; }
+.fuerza.fuerte { color: #28a745; }
 
 /* BOTONES */
 .botones {
     display: flex;
-    justify-content: space-between;
     gap: 10px;
     margin-top: 25px;
 }
@@ -142,7 +144,7 @@ input.invalido {
 /* BOTÓN REGISTRAR */
 .botones button[type="submit"] {
     background: #007bff;
-    color: #ffffff;
+    color: #fff;
 }
 
 .botones button[type="submit"]:hover {
@@ -152,7 +154,7 @@ input.invalido {
 /* BOTÓN REGRESAR */
 .botones a button {
     background: #6c757d;
-    color: #ffffff;
+    color: #fff;
 }
 
 .botones a button:hover {
