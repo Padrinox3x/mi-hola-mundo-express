@@ -1,0 +1,50 @@
+/* =========================
+   BREADCRUMB
+   ========================= */
+.breadcrumbs {
+    position: relative;              /* evita que flex del body lo rompa */
+    width: 100%;
+    padding: 14px 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    z-index: 1000;                    /* siempre arriba */
+}
+
+/* Links */
+.breadcrumbs a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+/* Separador */
+.breadcrumbs span {
+    color: #666;
+}
+
+/* Página actual */
+.breadcrumbs .active {
+    font-weight: bold;
+    color: #333;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 480px) {
+    .breadcrumbs {
+        padding: 12px 15px;
+        font-size: 13px;
+        flex-wrap: wrap;
+    }
+}
