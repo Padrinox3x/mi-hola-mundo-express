@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/public/partials/breadcrumbs.html')
-        .then(res => res.text())
+    fetch('/partials/breadcrumbs.html') // 👈 SIN /public
+        .then(res => {
+            if (!res.ok) throw new Error('No se pudo cargar el breadcrumb');
+            return res.text();
+        })
         .then(html => {
             document.body.insertAdjacentHTML('afterbegin', html);
-
-            // Usa el title de la página como breadcrumb activo
             const current = document.getElementById('breadcrumb-current');
             if (current) {
                 current.textContent = document.title;
             }
         })
-        .catch(err => console.error('Error cargando breadcrumbs:', err));
+        .catch(err => console.error(err));
 });
