@@ -3,31 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Prueba de reCAPTCHA</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/public/css/styles.css">
+
+    <!-- reCAPTCHA -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-    <h1>Prueba reCAPTCHA</h1>
 
-    <form action="/verificar" method="POST">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+        <a href="/public/indexdos.html">Inicio</a>
+        <span>›</span>
+        <span>Formulario</span>
+    </nav>
 
-        <!-- DATO QUE SE GUARDA EN LA BD -->
-        <label>Nombre:</label><br>
-        <input type="text" name="nombre" required>
-        <br><br>
+    <!-- Contenedor principal -->
+    <div class="container">
 
-        <!-- OPCIONAL -->
-        <label>Correo:</label><br>
-        <input type="email" name="correo">
-        <br><br>
+        <h1>Prueba reCAPTCHA</h1>
 
-        <!-- reCAPTCHA -->
-        <div class="g-recaptcha" data-sitekey="6Lc9wUQsAAAAABTFumROwrXSSNnjJk-JOuqq0bBx"></div>
+        <form action="/verificar" method="POST" class="formulario">
 
-        <br>
-        <button type="submit">Enviar</button>
-    </form>
-    <a href="/public/indexdos.html">Siguiente Pagina</a> 
-    <br> <br>
-    <a href="/formulario">Formulario</a>
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <!-- Correo -->
+            <div class="form-group">
+                <label for="correo">Correo (opcional)</label>
+                <input type="email" id="correo" name="correo">
+            </div>
+
+            <!-- reCAPTCHA -->
+            <div class="form-group captcha">
+                <div class="g-recaptcha" data-sitekey="6Lc9wUQsAAAAABTFumROwrXSSNnjJk-JOuqq0bBx"></div>
+            </div>
+
+            <button type="submit">Enviar</button>
+        </form>
+
+        <!-- Links -->
+        <div class="links">
+            <a href="/public/indexdos.html">⬅ Volver</a>
+            <a href="/formulario">Otro formulario</a>
+        </div>
+
+    </div>
+
 </body>
 </html>

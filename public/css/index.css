@@ -1,0 +1,116 @@
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Fondo general */
+body {
+    margin: 0;
+    padding: 0;
+    background: #f4f6f9;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    padding: 15px 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.breadcrumbs span {
+    margin: 0 5px;
+    color: #555;
+}
+
+/* Contenedor */
+.container {
+    max-width: 450px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Título */
+.container h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Formulario */
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grupos */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* CAPTCHA */
+.captcha {
+    display: flex;
+    justify-content: center;
+}
+
+/* Botón */
+button {
+    margin-top: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Links */
+.links {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.links a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 14px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
