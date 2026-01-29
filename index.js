@@ -117,7 +117,9 @@ app.post('/verificar', async (req, res, next) => {
 // =======================
 app.get('/carrusel', async (req, res) => {
     try {
-        const result = await sql.query(`
+        const pool = await conectarDB();
+
+        const result = await pool.request().query(`
             SELECT Titulo, UrlImagen
             FROM dbo.ImagenesCarrusel
             WHERE Activo = 1
@@ -128,8 +130,8 @@ app.get('/carrusel', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('❌ ERROR CARRUSEL:', error);
-        res.status(500).send(error.message); // temporal para debug
+        console.error('🔥 ERROR REAL:', error);
+        res.status(500).send(error.message);
     }
 });
 
