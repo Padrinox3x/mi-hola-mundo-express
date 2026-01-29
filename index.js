@@ -119,7 +119,7 @@ app.get('/carrusel', async (req, res) => {
     try {
         const result = await sql.query(`
             SELECT Titulo, UrlImagen
-            FROM CarruselImagenes
+            FROM dbo.ImagenesCarrusel
             WHERE Activo = 1
         `);
 
@@ -128,8 +128,8 @@ app.get('/carrusel', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('❌ Error carrusel:', error);
-        res.status(500).sendFile(__dirname + '/public/500.html');
+        console.error('❌ ERROR CARRUSEL:', error);
+        res.status(500).send(error.message); // temporal para debug
     }
 });
 
