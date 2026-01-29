@@ -14,14 +14,15 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // =======================
-// Conexión a SQL Server
+// Conexión a SQL Server (SOMEE)
 // =======================
 (async () => {
     try {
         await conectarDB();
-        console.log('✅ Conectado a SQL Server');
+        console.log('✅ Conectado a SQL Server (SOMEE)');
     } catch (err) {
-        console.error('❌ Error al conectar a la DB:', err);
+        console.error('❌ Error al conectar a la DB:', err.message);
+        process.exit(1); // ⛔ corta el servidor si no conecta
     }
 })();
 
@@ -34,35 +35,41 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-// Ruta de prueba de error
-app.get('/error-test', (req, res) => {
-    throw new Error('Error de prueba');
+// Ruta de prueba
+app.get('/test-db', async (req, res) => {
+    try {
+        const result = await sql.query`SELECT GETDATE() AS Fecha`;
+        res.json(result.recordset);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
+// Formulario
 app.get('/formulario', (req, res) => {
     res.sendFile(__dirname + '/public/formulario.html');
 });
+
+// =======================
 // Verificación reCAPTCHA
+// =======================
 app.post('/verificar', async (req, res, next) => {
     try {
         const token = req.body['g-recaptcha-response'];
         const nombre = req.body.nombre?.trim();
-
         const secretKey = process.env.RECAPTCHA_SECRET;
 
         // Validaciones
         if (!nombre) {
             return res.status(400).send(`
                 <h1>❌ Nombre inválido</h1>
-                <p>El nombre es obligatorio.</p>
                 <a href="/">Volver</a>
             `);
         }
 
         if (!token) {
             return res.status(400).send(`
-                <h1>❌ Verificación incompleta</h1>
-                <p>Marca la casilla "No soy un robot".</p>
+                <h1>❌ reCAPTCHA obligatorio</h1>
                 <a href="/">Volver</a>
             `);
         }
@@ -81,13 +88,12 @@ app.post('/verificar', async (req, res, next) => {
 
         if (!response.data.success) {
             return res.status(400).send(`
-                <h1>❌ Error de verificación</h1>
-                <p>Inténtalo de nuevo.</p>
+                <h1>❌ Falló la verificación</h1>
                 <a href="/">Volver</a>
             `);
         }
 
-        // Guardar en SQL Server
+        // Guardar en SOMEE (SQL Server)
         await sql.query`
             INSERT INTO Verificaciones (Nombre, Fecha)
             VALUES (${nombre}, GETDATE())
@@ -95,7 +101,7 @@ app.post('/verificar', async (req, res, next) => {
 
         res.send(`
             <h1>✅ Verificación correcta</h1>
-            <p>Hola <strong>${nombre}</strong>, el sistema confirma que eres humano.</p>
+            <p>Hola <strong>${nombre}</strong></p>
             <a href="/">Volver</a>
         `);
 
@@ -105,14 +111,14 @@ app.post('/verificar', async (req, res, next) => {
 });
 
 // =======================
-// 404 - Página no encontrada
+// 404
 // =======================
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/public/404.html');
 });
 
 // =======================
-// 500 - Error del servidor
+// 500
 // =======================
 app.use((err, req, res, next) => {
     console.error('💥 Error:', err);
@@ -120,8 +126,8 @@ app.use((err, req, res, next) => {
 });
 
 // =======================
-// Levantar servidor
+// Servidor
 // =======================
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
