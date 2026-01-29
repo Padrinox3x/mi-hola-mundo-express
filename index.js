@@ -113,6 +113,27 @@ app.post('/verificar', async (req, res, next) => {
 });
 
 // =======================
+// Carrusel (desde SOMEE)
+// =======================
+app.get('/carrusel', async (req, res) => {
+    try {
+        const result = await sql.query(`
+            SELECT Titulo, UrlImagen
+            FROM CarruselImagenes
+            WHERE Activo = 1
+        `);
+
+        res.render('Carrusel', {
+            imagenes: result.recordset
+        });
+
+    } catch (error) {
+        console.error('❌ Error carrusel:', error);
+        res.status(500).sendFile(__dirname + '/public/500.html');
+    }
+});
+
+// =======================
 // 404
 // =======================
 app.use((req, res) => {
