@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^1.13.2",
     "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "msql": "^1.0.3",
     "mssql": "^12.2.0"
