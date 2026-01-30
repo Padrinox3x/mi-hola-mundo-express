@@ -125,7 +125,7 @@ app.get('/carrusel', async (req, res) => {
             WHERE Activo = 1
         `);
 
-        res.render('Carrusel', {
+        res.render('carrusel', {
             imagenes: result.recordset
         });
 
