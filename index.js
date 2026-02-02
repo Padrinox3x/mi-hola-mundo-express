@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
 const { sql, conectarDB } = require('./db');
+const upload = require('./middlewares/upload');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -134,6 +135,41 @@ app.get('/carrusel', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+
+// =======================
+// Subir imagen al carrusel
+// =======================
+app.post(
+    '/carrusel/upload',
+    upload.single('imagen'),
+    async (req, res) => {
+        try {
+            const { titulo } = req.body;
+
+            if (!req.file) {
+                return res.status(400).send('❌ No se subió ninguna imagen');
+            }
+
+            const urlImagen = '/uploads/' + req.file.filename;
+
+            const pool = await conectarDB();
+
+            await pool.request()
+                .input('Titulo', sql.NVarChar, titulo)
+                .input('UrlImagen', sql.NVarChar, urlImagen)
+                .query(`
+                    INSERT INTO dbo.ImagenesCarrusel (Titulo, UrlImagen, Activo)
+                    VALUES (@Titulo, @UrlImagen, 1)
+                `);
+
+            res.redirect('/carrusel');
+
+        } catch (error) {
+            console.error('🔥 Error al subir imagen:', error);
+            res.status(500).send('Error al subir imagen');
+        }
+    }
+);
 
 // =======================
 // 404

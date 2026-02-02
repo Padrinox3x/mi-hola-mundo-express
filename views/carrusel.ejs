@@ -7,14 +7,28 @@
 </head>
 <body>
 
+<!-- ===== FORMULARIO SUBIR IMAGEN ===== -->
+<form action="/carrusel/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+    <input type="text" name="titulo" placeholder="Título de la imagen" required>
+    <input type="file" name="imagen" accept="image/*" required>
+    <button type="submit">Subir imagen</button>
+</form>
+
+<!-- ===== CARRUSEL ===== -->
 <div class="carrusel">
-    <% imagenes.forEach((img, index) => { %>
-        <div class="slide">
-            <img src="<%= img.UrlImagen %>" alt="<%= img.Titulo %>">
-            <h3><%= img.Titulo %></h3>
-        </div>
-    <% }) %>
+    <div class="slides">
+        <% imagenes.forEach((img) => { %>
+            <div class="slide">
+                <img src="<%= img.UrlImagen %>" alt="<%= img.Titulo %>">
+                <h3><%= img.Titulo %></h3>
+            </div>
+        <% }) %>
+    </div>
+
+    <button class="prev">❮</button>
+    <button class="next">❯</button>
 </div>
-<script src="js/breadcrumbs.js"></script>
+
+<script src="/js/carrusel.js"></script>
 </body>
 </html>
