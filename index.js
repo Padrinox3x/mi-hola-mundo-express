@@ -3,6 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 const { sql, conectarDB } = require('./db');
 const upload = require('./middlewares/upload');
+const cloudinary = require('./config/cloudinary');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -137,7 +138,7 @@ app.get('/carrusel', async (req, res) => {
 });
 
 // =======================
-// Subir imagen al carrusel
+// Subir imagen al carrusel (Cloudinary)
 // =======================
 app.post(
     '/carrusel/upload',
@@ -150,13 +151,19 @@ app.post(
                 return res.status(400).send('❌ No se subió ninguna imagen');
             }
 
-            const urlImagen = '/uploads/' + req.file.filename;
+            // Convertir buffer a base64
+            const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+
+            // Subir a Cloudinary
+            const result = await cloudinary.uploader.upload(base64Image, {
+                folder: 'carrusel'
+            });
 
             const pool = await conectarDB();
 
             await pool.request()
                 .input('Titulo', sql.NVarChar, titulo)
-                .input('UrlImagen', sql.NVarChar, urlImagen)
+                .input('UrlImagen', sql.NVarChar, result.secure_url)
                 .query(`
                     INSERT INTO dbo.ImagenesCarrusel (Titulo, UrlImagen, Activo)
                     VALUES (@Titulo, @UrlImagen, 1)
@@ -165,7 +172,7 @@ app.post(
             res.redirect('/carrusel');
 
         } catch (error) {
-            console.error('🔥 Error al subir imagen:', error);
+            console.error('🔥 Error al subir imagen a Cloudinary:', error);
             res.status(500).send('Error al subir imagen');
         }
     }
