@@ -3,67 +3,74 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-    background: #eef1f5;
+    background: #f1f3f6;
     min-height: 100vh;
+}
+
+/* ===== CONTENEDOR GENERAL ===== */
+.page-wrapper {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
 }
 
 /* ===== FORMULARIO ===== */
 .upload-form {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 16px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,.08);
     display: flex;
     gap: 12px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.1);
+    margin-bottom: 20px;
     align-items: center;
 }
 
 .upload-form input[type="text"] {
-    flex: 1;
-    padding: 10px 12px;
+    flex: 2;
+    padding: 10px 14px;
     border-radius: 8px;
     border: 1px solid #ccc;
 }
 
 .upload-form input[type="file"] {
-    flex: 1;
+    flex: 2;
 }
 
 .upload-form button {
-    background: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
     color: #fff;
     border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 10px 22px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background .3s;
+    font-weight: bold;
 }
 
 .upload-form button:hover {
-    background: #1e40af;
+    opacity: .9;
 }
 
-/* ===== CARRUSEL FULL SCREEN ===== */
+/* ===== CARRUSEL ===== */
 .carrusel {
     width: 100%;
-    height: calc(100vh - 120px);
-    margin: auto;
+    height: 70vh;
+    border-radius: 18px;
     overflow: hidden;
     position: relative;
-    background: #fff;
+    box-shadow: 0 20px 40px rgba(0,0,0,.2);
+    background: #ddd;
 }
 
-/* CONTENEDOR */
+/* SLIDES */
 .slides {
     display: flex;
     height: 100%;
-    transition: transform .6s ease-in-out;
+    transition: transform .6s ease;
 }
 
 /* SLIDE */
@@ -73,11 +80,13 @@ body {
     position: relative;
 }
 
-/* IMAGEN FULL */
+/* IMAGEN */
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 🔥 llena toda la pantalla */
+    object-fit: cover;
+    object-position: center;
+    image-orientation: from-image; /* 🔥 */
 }
 
 /* TEXTO */
@@ -86,11 +95,11 @@ body {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 12px 28px;
-    background: rgba(0,0,0,.55);
+    background: rgba(0,0,0,.6);
     color: #fff;
+    padding: 12px 28px;
     border-radius: 30px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 /* BOTONES */
@@ -98,37 +107,31 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255,255,255,.75);
-    color: #000;
+    background: rgba(255,255,255,.85);
     border: none;
-    font-size: 28px;
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    font-size: 26px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background .3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,.3);
 }
+
+.prev { left: 20px; }
+.next { right: 20px; }
 
 .prev:hover,
 .next:hover {
     background: #fff;
 }
 
-.prev { left: 20px; }
-.next { right: 20px; }
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .upload-form {
         flex-direction: column;
-        align-items: stretch;
     }
 
-    .slide h3 {
-        font-size: 16px;
-        padding: 8px 18px;
+    .carrusel {
+        height: 55vh;
     }
 }
