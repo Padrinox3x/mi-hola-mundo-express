@@ -8,10 +8,22 @@
 <body>
 <div class="page-wrapper">
 <!-- ===== FORMULARIO SUBIR IMAGEN ===== -->
-<form action="/carrusel/upload" method="POST" enctype="multipart/form-data">
-    <input type="text" name="titulo" placeholder="Título de la imagen" required>
-    <input type="file" name="imagen" accept="image/*" required>
-    <button type="submit">Subir imagen</button>
+<form class="upload-card" action="/carrusel/upload" method="POST" enctype="multipart/form-data">
+    <h2>📤 Subir imagen al carrusel</h2>
+
+    <input 
+        type="text" 
+        name="titulo" 
+        placeholder="Título de la imagen"
+        required
+    >
+
+    <label class="file-label">
+        <input type="file" name="imagen" accept="image/*" required>
+        📁 Seleccionar imagen
+    </label>
+
+    <button type="submit">⬆ Subir imagen</button>
 </form>
 
 <!-- ===== CARRUSEL ===== -->
