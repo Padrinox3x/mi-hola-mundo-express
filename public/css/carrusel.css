@@ -3,44 +3,67 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
 body {
-    background: #f2f4f8;
-    padding: 30px;
+    background: #eef1f5;
+    min-height: 100vh;
 }
 
-/* ===== FORM ===== */
+/* ===== FORMULARIO ===== */
 .upload-form {
-    max-width: 400px;
-    margin: 0 auto 25px;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    align-items: center;
 }
 
-.upload-form input,
+.upload-form input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.upload-form input[type="file"] {
+    flex: 1;
+}
+
 .upload-form button {
-    padding: 8px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .3s;
 }
 
-/* ===== CARRUSEL ===== */
+.upload-form button:hover {
+    background: #1e40af;
+}
+
+/* ===== CARRUSEL FULL SCREEN ===== */
 .carrusel {
-    max-width: 800px;
-    height: 420px;
+    width: 100%;
+    height: calc(100vh - 120px);
     margin: auto;
     overflow: hidden;
-    border-radius: 14px;
-    box-shadow: 0 18px 35px rgba(0,0,0,.18);
     position: relative;
-    background: #000;
+    background: #fff;
 }
 
-/* CONTENEDOR DESLIZABLE */
+/* CONTENEDOR */
 .slides {
     display: flex;
     height: 100%;
-    transition: transform .5s ease;
+    transition: transform .6s ease-in-out;
 }
 
 /* SLIDE */
@@ -50,23 +73,24 @@ body {
     position: relative;
 }
 
-/* IMAGEN */
+/* IMAGEN FULL */
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    background: #000;
+    object-fit: cover; /* 🔥 llena toda la pantalla */
 }
 
 /* TEXTO */
 .slide h3 {
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(transparent, rgba(0,0,0,.7));
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 28px;
+    background: rgba(0,0,0,.55);
     color: #fff;
-    text-align: center;
+    border-radius: 30px;
+    font-size: 20px;
 }
 
 /* BOTONES */
@@ -74,13 +98,37 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,.5);
-    color: white;
+    background: rgba(255,255,255,.75);
+    color: #000;
     border: none;
-    font-size: 24px;
-    padding: 10px;
+    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .3s;
 }
 
-.prev { left: 10px; }
-.next { right: 10px; }
+.prev:hover,
+.next:hover {
+    background: #fff;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .upload-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .slide h3 {
+        font-size: 16px;
+        padding: 8px 18px;
+    }
+}
