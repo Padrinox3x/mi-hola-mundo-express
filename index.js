@@ -138,6 +138,53 @@ app.get('/carrusel', async (req, res) => {
 });
 
 // =======================
+// Subir a Somme el formulario 
+// =======================
+
+app.post('/formulario', async (req, res) => {
+    try {
+        const {
+            Nombre,
+            ApellidoP,
+            ApellidoM,
+            Usuario,
+            Password,
+            Correo,
+            Telefono,
+            FechaNacimiento
+        } = req.body;
+
+        const pool = await conectarDB();
+
+        await pool.request()
+            .input('Nombre', sql.NVarChar, Nombre)
+            .input('ApellidoP', sql.NVarChar, ApellidoP)
+            .input('ApellidoM', sql.NVarChar, ApellidoM)
+            .input('Usuario', sql.NVarChar, Usuario)
+            .input('Password', sql.NVarChar, Password)
+            .input('Correo', sql.NVarChar, Correo)
+            .input('Telefono', sql.NVarChar, Telefono)
+            .input('FechaNacimiento', sql.Date, FechaNacimiento)
+            .query(`
+                INSERT INTO Usuarios
+                (Nombre, ApellidoP, ApellidoM, Usuario, Password, Correo, Telefono, FechaNacimiento)
+                VALUES
+                (@Nombre, @ApellidoP, @ApellidoM, @Usuario, @Password, @Correo, @Telefono, @FechaNacimiento)
+            `);
+
+        res.send(`
+            <h1>✅ Registro guardado</h1>
+            <a href="/">Volver</a>
+        `);
+
+    } catch (error) {
+        console.error('🔥 Error al guardar:', error);
+        res.status(500).send('Error al guardar datos');
+    }
+});
+
+
+// =======================
 // Subir imagen al carrusel (Cloudinary)
 // =======================
 app.post(

@@ -8,48 +8,38 @@
 </head>
 <body>
 <div class="main-container">
-<form id="formulario" novalidate>
+<form id="formulario" method="POST" action="/registro" novalidate>
     <h2>Registro</h2>
 
     <label>Nombre</label>
-    <input type="text" id="nombre" maxlength="30">
-    <div class="mensaje-error" id="error-nombre"></div>
+    <input type="text" id="nombre" name="Nombre" maxlength="30">
 
     <label>Apellido Paterno</label>
-    <input type="text" id="apellidoP" maxlength="30">
-    <div class="mensaje-error" id="error-apellidoP"></div>
+    <input type="text" id="apellidoP" name="ApellidoP" maxlength="30">
 
     <label>Apellido Materno</label>
-    <input type="text" id="apellidoM" maxlength="30">
-    <div class="mensaje-error" id="error-apellidoM"></div>
+    <input type="text" id="apellidoM" name="ApellidoM" maxlength="30">
 
     <label>Usuario</label>
-    <input type="text" id="usuario" maxlength="20">
-    <div class="mensaje-error" id="error-usuario"></div>
+    <input type="text" id="usuario" name="Usuario" maxlength="20">
 
     <label>Contraseña</label>
     <div class="password-box">
-        <input type="password" id="password" maxlength="30">
+        <input type="password" id="password" name="Password" maxlength="30">
         <button type="button" id="verPass">👁️</button>
     </div>
-    <div id="fuerzaPassword" class="fuerza"></div>
-    <div class="mensaje-error" id="error-password"></div>
 
     <label>Repetir Contraseña</label>
     <input type="password" id="password2" maxlength="30">
-    <div class="mensaje-error" id="error-password2"></div>
 
-    <label>Correo Electornico</label>
-    <input type="text" id="apellidoM" maxlength="30">
-    <div class="mensaje-error" id="error-apellidoM"></div>
+    <label>Correo Electrónico</label>
+    <input type="email" id="correo" name="Correo" maxlength="50">
 
     <label>Teléfono</label>
-    <input type="text" id="telefono" maxlength="10">
-    <div class="mensaje-error" id="error-telefono"></div>
+    <input type="text" id="telefono" name="Telefono" maxlength="10">
 
     <label>Fecha de Nacimiento</label>
-    <input type="date" id="fecha">
-    <div class="mensaje-error" id="error-fecha"></div>
+    <input type="date" id="fecha" name="FechaNacimiento">
 
     <div class="botones">
         <button type="submit">Registrar</button>
