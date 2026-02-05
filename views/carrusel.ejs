@@ -8,7 +8,7 @@
 <body>
 <div class="page-wrapper">
 <!-- ===== FORMULARIO SUBIR IMAGEN ===== -->
-<form class="upload-card" action="/carrusel/upload" method="POST" enctype="multipart/form-data">
+<form class="upload-card" action="/carrusel/upload" method="POST" enctype="multipart/form-data" id="formImagen">
     <h2>📤 Subir imagen al carrusel</h2>
 
     <input 
@@ -19,12 +19,22 @@
     >
 
     <label class="file-label">
-        <input type="file" name="imagen" accept="image/*" required>
+        <input 
+            type="file" 
+            name="imagen" 
+            id="imagenInput"
+            accept=".png,.jpg,.jpeg"
+            required
+        >
         📁 Seleccionar imagen
     </label>
 
+    <!-- MENSAJE DE ERROR -->
+    <p class="error-msg" id="errorImagen"></p>
+
     <button type="submit">⬆ Subir imagen</button>
 </form>
+
 
 <!-- ===== CARRUSEL ===== -->
 <div class="carrusel">

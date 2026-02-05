@@ -13,6 +13,12 @@ body {
     padding: 30px;
 }
 
+.error-msg {
+    color: #e53935;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
 /* =======================
    FORMULARIO SUBIR IMAGEN
 ======================= */
