@@ -59,6 +59,20 @@
     </div>
 
 </form>
+
+<h3>Registros</h3>
+<table id="tabla">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Usuario</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 </div>
 
 <script src="js/breadcrumbs.js"></script>
@@ -120,9 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ok = false;
         }
 
-        if (ok) {
-            e.target.submit(); // ✅ ENVÍA A SOMEE
-        }
+        if (ok) guardarRegistro();
     });
 
 });
