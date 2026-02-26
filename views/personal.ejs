@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Personal</title>
-<link rel="stylesheet" href="/css/personal.css">
+<link rel="stylesheet" href="css/personal.css">
 </head>
 <body>
 
@@ -38,18 +38,24 @@
 
 <!-- MODAL -->
 <div id="modal" class="modal">
-  <form id="formPersonal">
-    <input type="hidden" id="id">
-    <input id="Nombre" placeholder="Nombre">
-    <input id="Appaterno" placeholder="Apellido paterno">
-    <input id="Apmaterno" placeholder="Apellido materno">
-    <input id="Nempleado" placeholder="N° empleado">
-    <button>Guardar</button>
-    <button type="button" onclick="cerrarModal()">Cancelar</button>
-  </form>
+    <div class="modal-content">
+        <h3>Registrar Personal</h3>
+
+        <form id="formPersonal">
+            <input type="hidden" id="id">
+
+            <input id="Nombre" placeholder="Nombre" required>
+            <input id="Appaterno" placeholder="Apellido Paterno" required>
+            <input id="Apmaterno" placeholder="Apellido Materno" required>
+            <input id="Nempleado" placeholder="No. Empleado" required>
+
+            <button type="submit">Guardar</button>
+            <button type="button" id="btnCancelar">Cancelar</button>
+        </form>
+    </div>
 </div>
 
 <script src="/js/personal.js"></script>
-<link rel="stylesheet" href="/css/personal.css">
+
 </body>
 </html>
