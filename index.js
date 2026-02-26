@@ -4,7 +4,7 @@ require('dotenv').config();
 const { sql, conectarDB } = require('./db');
 const upload = require('./middlewares/upload');
 const cloudinary = require('./config/cloudinary');
-
+const personalRoutes = require('./routes/personal.routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use('/api/formulario', require('./routes/formulario'));
-
+app.use('/api/personal', personalRoutes);
 // =======================
 // Conexión a SQL Server (SOMEE)
 // =======================
@@ -34,6 +34,12 @@ app.use('/api/formulario', require('./routes/formulario'));
 // =======================
 // Rutas
 // =======================
+
+//CRUD
+// Vista del CRUD de Personal
+app.get('/personal', (req, res) => {
+    res.render('personal');
+});
 
 // Página principal
 app.get('/', (req, res) => {

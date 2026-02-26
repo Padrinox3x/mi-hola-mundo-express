@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Personal</title>
+<link rel="stylesheet" href="/css/personal.css">
+</head>
+<body>
+
+<div class="toolbar">
+    <input type="text" id="buscar" placeholder="Buscar...">
+    <select id="limit">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+    </select>
+    <button id="btnNuevo">➕</button>
+</div>
+
+<table>
+<thead>
+<tr>
+    <th>Nombre</th>
+    <th>Ap. Paterno</th>
+    <th>Ap. Materno</th>
+    <th>N° Empleado</th>
+    <th>Acciones</th>
+</tr>
+</thead>
+<tbody id="tablaPersonal"></tbody>
+</table>
+
+<div class="paginacion">
+    <button id="prev">◀</button>
+    <span id="pagina"></span>
+    <button id="next">▶</button>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <form id="formPersonal">
+    <input type="hidden" id="id">
+    <input id="Nombre" placeholder="Nombre">
+    <input id="Appaterno" placeholder="Apellido paterno">
+    <input id="Apmaterno" placeholder="Apellido materno">
+    <input id="Nempleado" placeholder="N° empleado">
+    <button>Guardar</button>
+    <button type="button" onclick="cerrarModal()">Cancelar</button>
+  </form>
+</div>
+
+<script src="/js/personal.js"></script>
+<link rel="stylesheet" href="/css/personal.css">
+</body>
+</html>

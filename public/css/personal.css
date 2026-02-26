@@ -1,0 +1,15 @@
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+}
+.modal form {
+    background: #fff;
+    padding: 20px;
+    width: 300px;
+    margin: 10% auto;
+}
+.modal.activo {
+    display: block;
+}
