@@ -3,13 +3,17 @@
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,.5);
+    justify-content: center;
+    align-items: center;
 }
-.modal form {
-    background: #fff;
-    padding: 20px;
-    width: 300px;
-    margin: 10% auto;
-}
+
 .modal.activo {
-    display: block;
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 320px;
+    border-radius: 6px;
 }
