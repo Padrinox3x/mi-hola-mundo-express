@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnNuevo = document.getElementById('btnNuevo');
     const btnCancelar = document.getElementById('btnCancelar');
     const form = document.getElementById('formPersonal');
+    const tabla = document.getElementById('tablaPersonal');
 
     function abrirModal() {
         form.reset();
@@ -18,7 +19,38 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNuevo.addEventListener('click', abrirModal);
     btnCancelar.addEventListener('click', cerrarModal);
 
-    // 🔥 GUARDAR EN BD
+    /* =======================
+       CARGAR TABLA
+    ======================= */
+    async function cargarPersonal() {
+        try {
+            const res = await fetch('/api/personal');
+            const result = await res.json();
+
+            tabla.innerHTML = '';
+
+            result.data.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${p.Nombre}</td>
+                    <td>${p.Appaterno}</td>
+                    <td>${p.Apmaterno}</td>
+                    <td>${p.Nempleado}</td>
+                    <td>
+                        <button onclick="eliminar(${p.Id})">🗑</button>
+                    </td>
+                `;
+                tabla.appendChild(tr);
+            });
+
+        } catch (error) {
+            console.error('Error al cargar personal:', error);
+        }
+    }
+
+    /* =======================
+       GUARDAR
+    ======================= */
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -32,9 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await fetch('/api/personal', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
 
@@ -43,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.ok) {
                 alert('✅ Personal guardado');
                 cerrarModal();
-                cargarPersonal(); // opcional si luego listamos
+                cargarPersonal(); // 🔥 AHORA SÍ FUNCIONA
             } else {
                 alert('❌ Error al guardar');
             }
@@ -54,4 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 🚀 Cargar al iniciar
+    cargarPersonal();
 });
