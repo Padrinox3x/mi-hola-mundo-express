@@ -6,8 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formPersonal');
     const tabla = document.getElementById('tablaPersonal');
     const inputBuscar = document.getElementById('buscar');
+    const selectLimit = document.getElementById('limit');
+    const btnPrev = document.getElementById('prev');
+    const btnNext = document.getElementById('next');
+    const spanPagina = document.getElementById('pagina');
 
     let timeout = null;
+
+    // 🔢 estado del paginado
+    let page = 1;
+    let limit = parseInt(selectLimit.value);
+    let totalPaginas = 1;
 
     function abrirModal() {
         modal.classList.add('activo');
@@ -26,12 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCancelar.addEventListener('click', cerrarModal);
 
     /* =======================
-       CARGAR TABLA (con búsqueda)
+       CARGAR TABLA (BUSCAR + PAGINAR)
     ======================= */
     async function cargarPersonal() {
         try {
             const buscar = inputBuscar.value.trim();
-            const res = await fetch(`/api/personal?buscar=${encodeURIComponent(buscar)}`);
+
+            const res = await fetch(
+                `/api/personal?buscar=${encodeURIComponent(buscar)}&limit=${limit}&page=${page}`
+            );
             const result = await res.json();
 
             tabla.innerHTML = '';
@@ -69,6 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 tabla.appendChild(tr);
             });
 
+            // 📄 actualizar paginado
+            totalPaginas = Math.ceil(result.total / limit) || 1;
+            spanPagina.textContent = `Página ${page} de ${totalPaginas}`;
+
+            btnPrev.disabled = page <= 1;
+            btnNext.disabled = page >= totalPaginas;
+
         } catch (error) {
             console.error('Error al cargar personal:', error);
         }
@@ -80,8 +99,35 @@ document.addEventListener('DOMContentLoaded', () => {
     inputBuscar.addEventListener('input', () => {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
+            page = 1;
             cargarPersonal();
         }, 300);
+    });
+
+    /* =======================
+       CAMBIAR FILAS (5 / 10 / 20)
+    ======================= */
+    selectLimit.addEventListener('change', () => {
+        limit = parseInt(selectLimit.value);
+        page = 1;
+        cargarPersonal();
+    });
+
+    /* =======================
+       PAGINACIÓN
+    ======================= */
+    btnPrev.addEventListener('click', () => {
+        if (page > 1) {
+            page--;
+            cargarPersonal();
+        }
+    });
+
+    btnNext.addEventListener('click', () => {
+        if (page < totalPaginas) {
+            page++;
+            cargarPersonal();
+        }
     });
 
     /* =======================
