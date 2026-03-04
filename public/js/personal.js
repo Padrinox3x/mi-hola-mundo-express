@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCancelar = document.getElementById('btnCancelar');
     const form = document.getElementById('formPersonal');
     const tabla = document.getElementById('tablaPersonal');
+    const inputBuscar = document.getElementById('buscar');
+
+    let timeout = null;
 
     function abrirModal() {
         modal.classList.add('activo');
@@ -23,11 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCancelar.addEventListener('click', cerrarModal);
 
     /* =======================
-       CARGAR TABLA
+       CARGAR TABLA (con búsqueda)
     ======================= */
     async function cargarPersonal() {
         try {
-            const res = await fetch('/api/personal');
+            const buscar = inputBuscar.value.trim();
+            const res = await fetch(`/api/personal?buscar=${encodeURIComponent(buscar)}`);
             const result = await res.json();
 
             tabla.innerHTML = '';
@@ -69,6 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error al cargar personal:', error);
         }
     }
+
+    /* =======================
+       BUSCAR EN VIVO (DEBOUNCE)
+    ======================= */
+    inputBuscar.addEventListener('input', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            cargarPersonal();
+        }, 300);
+    });
 
     /* =======================
        GUARDAR / EDITAR
