@@ -1,19 +1,213 @@
+/* =======================
+   TABLA
+======================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 10px 15px -3px rgba(0,0,0,.1),
+        0 4px 6px -2px rgba(0,0,0,.05);
+}
+
+thead {
+    background: #0f172a;
+    color: #ffffff;
+}
+
+th, td {
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+    background: #f1f5f9;
+}
+
+/* =======================
+   ACCIONES
+======================= */
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn.editar {
+    background: #2563eb;
+    color: #fff;
+}
+
+.btn.editar:hover {
+    background: #1e40af;
+    transform: scale(1.05);
+}
+
+.btn.eliminar {
+    background: #dc2626;
+    color: #fff;
+}
+
+.btn.eliminar:hover {
+    background: #991b1b;
+    transform: scale(1.05);
+}
+
+/* =======================
+   TOOLBAR
+======================= */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.toolbar input,
+.toolbar select {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+}
+
+#btnNuevo {
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+#btnNuevo:hover {
+    background: #15803d;
+}
+
+/* =======================
+   MODAL OVERLAY
+======================= */
 .modal {
-    display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.5);
+    background: rgba(15, 23, 42, 0.6); /* azul oscuro elegante */
+    display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 1000;
 }
 
 .modal.activo {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
 }
 
+/* =======================
+   CONTENIDO
+======================= */
 .modal-content {
-    background: white;
-    padding: 20px;
-    width: 320px;
-    border-radius: 6px;
+    background: #ffffff;
+    width: 380px;
+    max-width: 92%;
+    border-radius: 14px;
+    padding: 24px 26px;
+    box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.15),
+        0 10px 10px -5px rgba(0, 0, 0, 0.08);
+    transform: translateY(-10px) scale(0.97);
+    transition: transform 0.25s ease;
+}
+
+.modal.activo .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+/* =======================
+   TÍTULO
+======================= */
+.modal-content h3 {
+    margin: 0 0 18px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: center;
+}
+
+/* =======================
+   FORMULARIO
+======================= */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-content input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* =======================
+   BOTONES
+======================= */
+.modal-content button {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.modal-content button[type="submit"] {
+    background: #2563eb;
+    color: white;
+}
+
+.modal-content button[type="submit"]:hover {
+    background: #1e40af;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+}
+
+.modal-content button#btnCancelar {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.modal-content button#btnCancelar:hover {
+    background: #d1d5db;
+}
+
+/* =======================
+   SEPARACIÓN BOTONES
+======================= */
+.modal-content button + button {
+    margin-top: 6px;
 }
