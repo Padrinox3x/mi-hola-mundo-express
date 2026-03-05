@@ -57,5 +57,71 @@
 
 <script src="/js/personal.js"></script>
 <script src="/js/breadcrumbs.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.getElementById('formPersonal');
+
+    const nombre = document.getElementById('Nombre');
+    const appaterno = document.getElementById('Appaterno');
+    const apmaterno = document.getElementById('Apmaterno');
+    const nempleado = document.getElementById('Nempleado');
+
+    const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    const soloNumeros = /^[0-9]+$/;
+
+    function validarLetras(input, max) {
+        if (input.value.length > max) {
+            input.value = input.value.slice(0, max);
+        }
+        input.value = input.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+    }
+
+    function validarNumeros(input, max) {
+        if (input.value.length > max) {
+            input.value = input.value.slice(0, max);
+        }
+        input.value = input.value.replace(/[^0-9]/g, '');
+    }
+
+    // 🔤 Validaciones en vivo
+    nombre.addEventListener('input', () => validarLetras(nombre, 50));
+    appaterno.addEventListener('input', () => validarLetras(appaterno, 50));
+    apmaterno.addEventListener('input', () => validarLetras(apmaterno, 50));
+    nempleado.addEventListener('input', () => validarNumeros(nempleado, 5));
+
+    // 🚫 Validación final antes de enviar
+    form.addEventListener('submit', (e) => {
+
+        if (
+            !soloLetras.test(nombre.value) ||
+            !soloLetras.test(appaterno.value) ||
+            !soloLetras.test(apmaterno.value)
+        ) {
+            alert('❌ Nombre y apellidos solo deben contener letras');
+            e.preventDefault();
+            return;
+        }
+
+        if (!soloNumeros.test(nempleado.value)) {
+            alert('❌ El número de empleado solo debe contener números');
+            e.preventDefault();
+            return;
+        }
+
+        if (
+            nombre.value.length === 0 ||
+            appaterno.value.length === 0 ||
+            apmaterno.value.length === 0 ||
+            nempleado.value.length === 0
+        ) {
+            alert('❌ Todos los campos son obligatorios');
+            e.preventDefault();
+        }
+    });
+
+});
+</script>
 </body>
 </html>
