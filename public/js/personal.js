@@ -5,19 +5,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCancelar = document.getElementById('btnCancelar');
     const form = document.getElementById('formPersonal');
     const tabla = document.getElementById('tablaPersonal');
+
     const inputBuscar = document.getElementById('buscar');
     const selectLimit = document.getElementById('limit');
+
+    const btnFirst = document.getElementById('first');
     const btnPrev = document.getElementById('prev');
     const btnNext = document.getElementById('next');
+    const btnLast = document.getElementById('last');
     const spanPagina = document.getElementById('pagina');
 
     let timeout = null;
 
-    // 🔢 estado del paginado
+    // 🔢 Estado del paginado
     let page = 1;
     let limit = parseInt(selectLimit.value);
     let totalPaginas = 1;
 
+    /* =======================
+       MODAL
+    ======================= */
     function abrirModal() {
         modal.classList.add('activo');
     }
@@ -35,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCancelar.addEventListener('click', cerrarModal);
 
     /* =======================
-       CARGAR TABLA (BUSCAR + PAGINAR)
+       CARGAR TABLA
     ======================= */
     async function cargarPersonal() {
         try {
@@ -44,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch(
                 `/api/personal?buscar=${encodeURIComponent(buscar)}&limit=${limit}&page=${page}`
             );
+
             const result = await res.json();
 
             tabla.innerHTML = '';
@@ -81,20 +89,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 tabla.appendChild(tr);
             });
 
-            // 📄 actualizar paginado
+            // 📄 Paginación
             totalPaginas = Math.ceil(result.total / limit) || 1;
             spanPagina.textContent = `Página ${page} de ${totalPaginas}`;
 
+            btnFirst.disabled = page <= 1;
             btnPrev.disabled = page <= 1;
             btnNext.disabled = page >= totalPaginas;
+            btnLast.disabled = page >= totalPaginas;
 
         } catch (error) {
-            console.error('Error al cargar personal:', error);
+            console.error('❌ Error al cargar personal:', error);
         }
     }
 
     /* =======================
-       BUSCAR EN VIVO (DEBOUNCE)
+       BUSCAR (DEBOUNCE)
     ======================= */
     inputBuscar.addEventListener('input', () => {
         clearTimeout(timeout);
@@ -105,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =======================
-       CAMBIAR FILAS (5 / 10 / 20)
+       CAMBIAR FILAS
     ======================= */
     selectLimit.addEventListener('change', () => {
         limit = parseInt(selectLimit.value);
@@ -116,6 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =======================
        PAGINACIÓN
     ======================= */
+    btnFirst.addEventListener('click', () => {
+        page = 1;
+        cargarPersonal();
+    });
+
     btnPrev.addEventListener('click', () => {
         if (page > 1) {
             page--;
@@ -128,6 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
             page++;
             cargarPersonal();
         }
+    });
+
+    btnLast.addEventListener('click', () => {
+        page = totalPaginas;
+        cargarPersonal();
     });
 
     /* =======================
